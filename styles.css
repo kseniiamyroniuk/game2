@@ -1,0 +1,767 @@
+/* Основні стилі */
+body {
+    font-family: "Comic Sans MS", "Chalkboard SE", cursive;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background: #87CEEB;
+    min-height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow-x: hidden;
+    padding-bottom: 80px;
+}
+
+/* Фонові елементи */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 20%, white 20%, transparent 20%),
+        radial-gradient(circle at 40% 30%, white 25%, transparent 25%),
+        radial-gradient(circle at 60% 10%, white 28%, transparent 28%),
+        radial-gradient(circle at 80% 40%, white 22%, transparent 22%);
+    opacity: 0.8;
+    z-index: -1;
+    animation: float 60s linear infinite;
+} 
+body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background: linear-gradient(170deg,
+        transparent 20%,
+        #6fdd6f 20%,
+        #6fdd6f 30%,
+        #d78c4b 30%,
+        #d78c4b 40%,
+        #6fdd6f 40%
+    );
+    z-index: -1;
+}
+/* Заголовки */
+.welcome-message {
+    font-size: 3.5em;
+    color: #2c3e50;
+    margin: 20px 0;
+    padding: 30px;
+    text-shadow: 3px 3px 6px rgba(255,255,255,0.8);
+    position: relative;
+    z-index: 1;
+}
+/* Контейнер рівнів */
+.levels-container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Кнопки */
+.level-btn {
+    background: linear-gradient(45deg, #8B4513, #A0522D);
+    color: #fff;
+    border: none;
+    padding: 25px 50px;
+    font-size: 1.6em;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.4s;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    font-family: inherit;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+}
+
+.level-btn::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    height: 50%;
+    background: linear-gradient(rgba(255,255,255,0.2), transparent);
+    border-radius: 18px 18px 0 0;
+}
+
+/* Ігрова область */
+.game-area {
+    width: 100%;
+    max-width: 1000px;
+    min-height: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Адаптивність */
+@media screen and (max-width: 1200px) {
+    .game-area {
+        width: 100%;
+        padding: 15px;
+        gap: 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .welcome-message {
+        font-size: 2.5em;
+    }
+    
+    .game-title {
+        font-size: 2em;
+    }
+    
+    .level-btn {
+        padding: 20px 30px;
+        font-size: 1.4em;
+    }
+    
+    .game-area {
+        padding: 15px;
+        gap: 15px;
+    }
+}
+
+.level-content {
+    display: none;
+    padding: 25px;
+    background-color: rgba(255,255,255,0.95);
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.level-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.start-game-btn {
+    background: linear-gradient(45deg, #26de81, #20bf6b);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 15px 0;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.start-game-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(32,191,107,0.3);
+}
+
+.game-item {
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.level1-item {
+    width: 200px;
+    background-color: white;
+}
+.game-item:hover {
+    transform: scale(1.1);
+}
+
+.game-item.correct {
+    border: 3px solid #27ae60;
+    border-radius: 8px;
+}
+
+.game-item.wrong {
+    border: 3px solid #e74c3c;
+    border-radius: 8px;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.level-btn.disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.level-btn.disabled:hover {
+    background-color: #bdc3c7;
+}
+
+.level-btn.completed {
+    background-color: #27ae60;
+}
+
+.level-btn.completed:hover {
+    background-color: #219a52;
+} 
+/* ... попередні стилі ... */
+
+
+.game-area {
+    display: none;  /* Спочатку приховуємо */
+    width: 100%;
+    min-height: 500px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 15px;
+    position: relative;
+    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.game-area.active {
+    display: flex;  /* Показуємо як flex коли активний */
+}
+
+.gnome-image:hover {
+    transform: scale(1.05);
+}
+
+.speech-bubble:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 15px;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-right-color: #fff;
+    border-left: 0;
+    margin-left: -15px;
+}
+
+.speech-bubble.active {
+    opacity: 1;
+}
+
+.gnome-container {
+    position: fixed;
+    bottom: 0;
+    left: -2%;
+    display: flex;
+    align-items: flex-end;
+    z-index: 1000;
+    max-width: min-content;
+}
+
+.gnome-image {
+    width: 280px; 
+    height: auto;
+}
+
+.speech-bubble {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 100px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-width: 400px;
+    font-size: 1.3em;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.chick-image {
+    width: 570px;
+    object-fit: contain;
+    height: auto;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.game-item.wrong {
+    animation: shake 0.5s;
+}
+
+.game-item.correct {
+    transition: transform 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* Стилі для елементів другого рівня */
+.level2-item {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    z-index: 2 !important;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s;
+    position: absolute;
+}
+
+.level2-item.wrong {
+    animation: shake 0.5s;
+    border: none !important;
+}
+
+.level2-item.correct {
+    border: none !important;
+}
+
+.bee-image {
+    width: 500px;
+    height: auto;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.level3-item {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    z-index: 2 !important;
+    transition: transform 0.3s !important;
+    position: absolute;
+    height: auto;
+}
+
+.level3-item[src*="flower"] {
+    background-color: transparent !important;
+}
+
+.level3-item:hover {
+    transform: scale(1.1) !important;
+}
+
+.level3-item.correct {
+    animation: collect 0.5s forwards;
+}
+
+@keyframes collect {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+.coloring-area {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: visible;
+}
+
+.outline-image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.color-spots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.color-spot {
+    position: absolute;
+    cursor: pointer;
+    transition: all 0.3s;
+    overflow: visible;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.color-spot:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 2px #3498db;
+}
+
+.color-palette {
+    background: linear-gradient(135deg, #fff 0%, #f7f7f7 100%);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.color-option {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 4px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.color-option:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.color-option.selected {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 4px white, 0 0 0 8px #3498db;
+}
+
+.color-option.yellow { background-color: #FFD700; }
+.color-option.red { background-color: #FF4136; }
+.color-option.blue { background-color: #0074D9; }
+.color-option.green { background-color: #2ECC40; }
+
+.colored-image {
+    display: block;
+    opacity: 0;
+    width: 300px !important;
+    height: 300px !important;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    pointer-events: none;
+    z-index: 100;
+    transition: all 0.5s ease;
+}
+
+.colored-image.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.color-option.wrong {
+    animation: shake 0.5s;
+}
+
+.color-spot.wrong {
+    border: 3px solid #e74c3c;
+    animation: shake 0.5s;
+}
+
+.color-spot.correct {
+    border: 3px solid #27ae60;
+}
+
+.sun-image {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    z-index: 4;
+    display: none;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    width: 200px;
+    background: transparent;
+    
+}
+
+.chick4-image {
+    position: absolute;
+    top: 30%;
+    left: 31%;
+    z-index: 3;
+    display: none;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    width: 193px;
+    background: transparent;
+}
+
+.flower-image {
+    position: absolute;
+    top: 54%;
+    left: 68%;
+    z-index: 3;
+    display: none;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    width: 158px;
+    background: transparent;
+
+}
+
+.sun-image.visible,
+.chick4-image.visible,
+.flower-image.visible {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Додамо це правило для всіх елементів гри */
+.game-area * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Також додамо для зображень */
+img {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Футер */
+.footer {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.footer-content {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.footer-btn {
+    background: none;
+    border: none;
+    color: #4a4a4a;
+    font-family: inherit;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.footer-btn:hover {
+   
+    color: #2c3e50;
+    transform: translateY(-2px);
+}
+
+.footer-btn i {
+    font-size: 1.2em;
+}
+
+.home-btn i {
+    color: #3498db;
+}
+
+.about-btn i {
+    color: #2ecc71;
+}
+
+.support-btn i {
+    color: #e74c3c;
+}
+
+/* Адаптивність для футера */
+@media screen and (max-width: 600px) {
+    .footer-content {
+        gap: 15px;
+    }
+
+    .footer-btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+}
+
+/* Додаємо відступ для останнього рівня */
+#level4 {
+    margin-bottom: 500px; /* Великий відступ знизу */
+}
+
+/* Стилі для нагороди */
+.reward {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    animation: rewardFadeIn 0.5s ease-out forwards;
+}
+
+.reward-content {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+    transform: scale(0);
+    animation: rewardScaleIn 0.5s ease-out forwards;
+}
+
+.reward h2 {
+    color: #2c3e50;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.reward p {
+    color: #34495e;
+    font-size: 1.5em;
+    margin-bottom: 30px;
+}
+
+.medal {
+    font-size: 5em;
+    margin: 20px 0;
+    animation: medalRotate 2s infinite linear;
+}
+
+.reward-btn {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.reward-btn:hover {
+    transform: scale(1.1);
+}
+
+@keyframes medalRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes rewardScaleIn {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
+
+@keyframes rewardFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.reward.fade-out {
+    animation: rewardFadeOut 0.5s ease-out forwards;
+}
+
+@keyframes rewardFadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+.clickable {
+    cursor: pointer;
+}
+
+.coloring-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+#coloringCanvas {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background: white;
+}
+
+.color-palette {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.color-option {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.color-option.selected {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.color-option.yellow { background-color: #FFD700; }
+.color-option.red { background-color: #FF4136; }
+.color-option.blue { background-color: #0074D9; }
+.color-option.green { background-color: #2ECC40; }
+
+

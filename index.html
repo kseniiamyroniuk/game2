@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подорож у жовтий світ</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <!-- для іконок у футері знизу stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+</head>
+<body>
+    <div class="welcome-message">
+        Гра: "Подорож у жовтий світ"
+    </div>
+    
+    <div class="levels-container">
+        <button class="level-btn" onclick="toggleLevel(1)">Рівень 1 - Знайди жовті предмети</button>
+        <div class="level-content" id="level1">
+            <p>На галявині з'являються різнокольорові предмети (кульки, квіточки, листочки). Гномик-помічник просить знайти та натиснути лише на жовті предмети.</p>
+            <p><strong>Завдання:</strong> Дитина натискає на всі жовті об'єкти.</p>
+            <p><strong>Підказки:</strong> Якщо дитина натискає на інший колір, персонаж каже: "Це не жовтий. Спробуй ще!".</p>
+            <p><strong>Результат:</strong> Розвиток уміння розрізняти жовтий колір.</p>
+            <button class="start-game-btn" onclick="startGame(1)">Почати гру</button>
+            <div id="gameArea1" class="game-area"></div>
+        </div>
+
+        <button class="level-btn" onclick="toggleLevel(2)">Рівень 2 - Допоможи курчатці знайти їжу</button>
+        <div class="level-content" id="level2">
+            <p>Курча шукає зернятка серед камінців. Зернятка жовті, а камінці — сірі.</p>
+            <p><strong>Завдання:</strong> Перетягувати жовті зернятка до мисочки курчатки.</p>
+            <p><strong>Підказки:</strong> Якщо дитина тягне до мисочки камінчик, персонаж каже: "Це не жовте зернятко. Спробуй ще!".</p>
+            <p><strong>Результат:</strong> Дитина навчається порівнювати та вибирати жовті об'єкти серед інших.</p>
+            <button class="start-game-btn" onclick="startGame(2)">Почати гру</button>
+            <div id="gameArea2" class="game-area">
+                <div class="level2-container">
+                    <img src="images/chick.png" alt="Курча" class="chick-image">
+                </div>
+            </div>
+        </div>
+
+        <button class="level-btn" onclick="toggleLevel(3)">Рівень 3 - Політ бджілки</button>
+        <div class="level-content" id="level3">
+            <p>Бджілка летить до жовтих квіточок, але по дорозі є також сині й червоні квіти.</p>
+            <p><strong>Завдання:</strong> Натискати лише на жовті квіти, щоб бджілка збирала нектар.</p>
+            <p><strong>Підказка:</strong> Якщо дитина натискає неправильно, звучить підказка: "Ой! Це не жовтий!".</p>
+            <p><strong>Результат:</strong> Закріплення асоціацій із жовтим кольором.</p>
+            <button class="start-game-btn" onclick="startGame(3)">Почати гру</button>
+            <div id="gameArea3" class="game-area">
+                <img src="images/bee.png" alt="Бджілка" class="bee-image">
+            </div>
+        </div>
+        <button class="level-btn" onclick="toggleLevel('sport')">Руханка</button>
+        <div class="level-content" id="sport">
+            <p>На екрані з’являється відео, в якому курчатко здійснює руханку. Завдання житини повторювати рухи, які відтворюються на відео.</p>
+            <p><strong>Підказка:</strong> Коли дитина виконає всі рухи з відео персонаж каже: "Молодець, у тебе з’явились сили".</p>
+            <p><strong>Результат:</strong> Дитина отримує емоційне розвантаження, розвиває координацію рухів та фізичну активність.</p>
+            <a href="https://www.youtube.com/watch?v=G3RKJptEBpw" target="_blank">перейти до відео</a>
+        </div>
+
+        <button class="level-btn" onclick="toggleLevel(4)">Рівень 4 - Розмалюй жовтий світ</button>
+        <div class="level-content" id="level4">
+            <p>Дитині показується чорно-білий малюнок Сонечка, курчатки та квіткочки.</p>
+            <p><strong>Завдання:</strong> Натискати на певні ділянки малюнка, щоб вони ставали жовтими.</p>
+            <p><strong>Підказка:</strong> Поряд із жовтим з'являються інші кольори.</p>
+            <p><strong>Результат:</strong> Розвиток точності рухів і закріплення кольору.</p>
+            <button class="start-game-btn" onclick="startGame(4)">Почати гру</button>
+            <div id="gameArea4" class="game-area">
+                <div class="coloring-container">
+                    <canvas id="coloringCanvas"></canvas>
+                    <div class="color-palette">
+                        <div class="color-option yellow selected" data-color="#FFD700"></div>
+                        <div class="color-option red" data-color="#FF4136"></div>
+                        <div class="color-option blue" data-color="#0074D9"></div>
+                        <div class="color-option green" data-color="#2ECC40"></div>
+                    </div>
+                    <button class="complete-btn start-game-btn">Завершити розмальовку</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="gnome-container">
+        <img src="images/gnome.png" alt="Гном-помічник" class="gnome-image">
+        <div class="speech-bubble" id="gnomeSpeech"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <button class="footer-btn home-btn">
+                <i class="fas fa-home"></i>
+                Додому
+            </button>
+            <button class="footer-btn about-btn">
+                <i class="fas fa-info-circle"></i>
+                Про нас
+            </button>
+            <button class="footer-btn support-btn">
+                <i class="fas fa-heart"></i>
+                Підтримати
+            </button>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
